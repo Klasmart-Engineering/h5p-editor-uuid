@@ -21,14 +21,14 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'h5peditor-boilerplate.css'
+      filename: 'h5peditor-uuid.css'
     })
   ],
   entry: {
-    dist: './src/entries/h5peditor-boilerplate.js'
+    dist: './src/entries/h5peditor-uuid.js'
   },
   output: {
-    filename: 'h5peditor-boilerplate.js',
+    filename: 'h5peditor-uuid.js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {

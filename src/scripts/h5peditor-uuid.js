@@ -1,5 +1,7 @@
-/** Class for Boilerplate H5P widget */
-class Boilerplate {
+import './../styles/h5peditor-uuid.scss';
+
+/** Class for UUID H5P widget */
+export default class UUID {
 
   /**
    * @constructor
@@ -14,6 +16,8 @@ class Boilerplate {
     this.params = params;
     this.setValue = setValue;
 
+    console.log(this.field);
+
     // Callbacks to call when parameters change
     this.changes = [];
 
@@ -22,7 +26,7 @@ class Boilerplate {
 
     // DOM
     this.$container = H5P.jQuery('<div>', {
-      class: 'h5peditor-boilerplate'
+      class: 'h5peditor-uuid hidden'
     });
 
     // Instantiate original field (or create your own and call setValue)
@@ -39,7 +43,19 @@ class Boilerplate {
     // Errors (or add your own)
     this.$errors = this.$container.find('.h5p-errors');
 
-    // Use H5PEditor.t('H5PEditor.Boilerplate', 'foo'); to output translatable strings
+    if (this.field.type !== 'text') {
+      return; // Not our cup of tea
+    }
+
+    const uuidLength = typeof this?.field?.uuid?.length === 'number' ?
+      Math.max(1, this.field.uuid.length) :
+      1;
+
+    // Set initial subcontentId, should then be eternal
+    if (!this.params || this.params === '') {
+      const uuids = Array(uuidLength).fill().map(id => H5P.createUUID());
+      this.fieldInstance.forceValue(uuids.join(';'));
+    }
   }
 
   /**
@@ -73,6 +89,5 @@ class Boilerplate {
     this.changes.forEach(change => {
       change(this.params);
     });
-  }  
+  }
 }
-export default Boilerplate;
